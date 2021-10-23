@@ -4,11 +4,21 @@ import ItemCard from "../ItemCard/ItemCard";
 import NavBar from "../../NavBar/NavBar";
 import CartPreview from "../CartPreview/CartPreview";
 import "./items-container.css";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 export default function ItemsContainer() {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [category, setCategory] = useState("5");
+  const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  }));
 
   const categories = [
     "Pick a category",
@@ -63,7 +73,7 @@ export default function ItemsContainer() {
         Electronics
       </button>
 
-      <div className="items-container">
+      <Grid container spacing={10} style={{ padding: "24px" }}>
         {items.length > 0 &&
           items
             .filter(
@@ -72,9 +82,12 @@ export default function ItemsContainer() {
                 category === "5"
             )
             .map((elem) => (
-              <ItemCard info={elem} key={elem.id} selectItem={selectItem} />
+              <Grid key={elem.id} item xs={12} sm={6} md={4} lg={4} xl={3}>
+                <ItemCard info={elem} key={elem.id} selectItem={selectItem} />
+              </Grid>
             ))}
-      </div>
+      </Grid>
+
       <h1>
         {selectedItems.length > 0 &&
           selectedItems.map((elem) => <CartPreview selectedItems={elem} />)}
