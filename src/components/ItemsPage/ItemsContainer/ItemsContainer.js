@@ -5,20 +5,17 @@ import NavBar from "../../NavBar/NavBar";
 import CartPreview from "../CartPreview/CartPreview";
 import "./items-container.css";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function ItemsContainer() {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [category, setCategory] = useState("5");
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
 
   const categories = [
     "Pick a category",
@@ -56,22 +53,24 @@ export default function ItemsContainer() {
   return (
     <div>
       <NavBar selectedItems={selectedItems} />
-      <h2>Category: {categories[category]}</h2>
-      <button onClick={handleCategory} value={"5"}>
-        All
-      </button>
-      <button onClick={handleCategory} value={"1"}>
-        Men's Clothing
-      </button>
-      <button onClick={handleCategory} value={"2"}>
-        Women's Clothing
-      </button>
-      <button onClick={handleCategory} value={"3"}>
-        Jewelry
-      </button>
-      <button onClick={handleCategory} value={"4"}>
-        Electronics
-      </button>
+      <Box sx={{ minWidth: 120 }} style={{ marginTop: "15px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="category">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={category}
+            label="Category"
+            onChange={handleCategory}
+          >
+            <MenuItem value={"5"}>All</MenuItem>
+            <MenuItem value={"1"}>Men's Clothing</MenuItem>
+            <MenuItem value={"2"}>Women's Clothing</MenuItem>
+            <MenuItem value={"3"}>Jewelry</MenuItem>
+            <MenuItem value={"4"}>Electronics</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Grid container spacing={10} style={{ padding: "24px" }}>
         {items.length > 0 &&
