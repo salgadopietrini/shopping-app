@@ -1,6 +1,10 @@
 .items-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid grey;
+  /*   background-color: aqua; */
+}
+
+.cart-preview {
+  display: flex;
   justify-content: center;
   align-items: center;
 }

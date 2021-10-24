@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,6 +12,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Rating from "@mui/material/Rating";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -24,18 +28,35 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard(props) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [added, setAdded] = useState(0);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const handleClick = () => {
+  const handleSelect = () => {
     props.selectItem(props.info.id);
+    setOpen(true);
+    setAdded((prevValue) => prevValue + 1);
+  };
+
+  const handleRemove = () => {
+    props.removeItem(props.info.id);
+    setOpen(false);
+    setAdded(0);
   };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader title={props.info.title} subheader={props.info.category} />
+      <CardHeader
+        title={
+          props.info.title.length > 17
+            ? props.info.title.slice(0, 17) + "..."
+            : props.info.title
+        }
+        subheader={props.info.category}
+      />
       <CardMedia
         component="img"
         height="194"
@@ -58,10 +79,33 @@ export default function RecipeReviewCard(props) {
         <IconButton
           color="primary"
           aria-label="add to shopping cart"
-          onClick={handleClick}
+          onClick={handleSelect}
         >
           <AddShoppingCartIcon />
         </IconButton>
+
+        <Box sx={{ width: "100%" }}>
+          <Collapse in={open}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={handleRemove}
+                >
+                  <Button color="inherit" size="small">
+                    UNDO
+                  </Button>
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              {added === 1 ? "Added" : "Already in cart"}
+            </Alert>
+          </Collapse>
+        </Box>
+
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -71,8 +115,12 @@ export default function RecipeReviewCard(props) {
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+          <Typography paragraph>
+            <b>{props.info.title}</b>
+          </Typography>
           <Typography paragraph>{props.info.description}</Typography>
         </CardContent>
       </Collapse>

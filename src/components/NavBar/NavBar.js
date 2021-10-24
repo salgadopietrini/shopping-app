@@ -16,17 +16,6 @@ export default function NavBar(props) {
         <Toolbar>
           <IconButton
             component={Link}
-            to={"/Shop"}
-            color="inherit"
-            aria-label="add to shopping cart"
-          >
-            <ShoppingBagIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Shop
-          </Typography>
-          <IconButton
-            component={Link}
             to={"/"}
             color="inherit"
             aria-label="add to shopping cart"
@@ -36,7 +25,17 @@ export default function NavBar(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Home
           </Typography>
-
+          <IconButton
+            component={Link}
+            to={"/Shop"}
+            color="inherit"
+            aria-label="add to shopping cart"
+          >
+            <ShoppingBagIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Shop
+          </Typography>
           <IconButton
             component={Link}
             to={{
