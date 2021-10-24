@@ -82,7 +82,7 @@ export default function ItemsContainer() {
             </FormControl>
           </Box>
 
-          {selectedItems.length > 0 && (
+          {
             <Box sx={{ minWidth: 120 }} style={{ marginTop: "15px" }}>
               <Grid container spacing={10} style={{ padding: "24px" }}>
                 <Grid key={0} item className="cart-preview">
@@ -107,7 +107,7 @@ export default function ItemsContainer() {
                   ))}
               </Grid>
             </Box>
-          )}
+          }
 
           <Grid container spacing={10} style={{ padding: "24px" }}>
             {items.length > 0 &&
